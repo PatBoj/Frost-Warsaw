@@ -1,0 +1,73 @@
+# Byte-compiled / cached files
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtual environments
+venv/
+env/
+.venv/
+.conda/
+*.conda
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Logs & debugging files
+*.log
+*.out
+*.err
+
+# System files
+.DS_Store
+Thumbs.db
+
+# SQLite database files
+*.sqlite
+*.db
+*.sqlite3
+*.db-journal
+
+# Python package files
+dist/
+build/
+*.egg-info/
+*.manifest
+*.spec
+
+# Cache & temporary files
+.cache/
+*.tmp
+*.bak
+*.swp
+
+# VSCode settings (if you use VSCode)
+.vscode/
+
+# Anaconda environment files
+*.anaconda_backup
+conda-meta/
+
+# Pipenv & Poetry
+Pipfile
+Pipfile.lock
+poetry.lock
+
+# Jupyter Notebook extensions
+.jupyter/
+
+# Ignore environment variables & secrets
+.env
+*.env
+config.json
+credentials.json
+secrets.json
+
+# Ignore large datasets or files
+data/
+*.csv
+*.parquet
+*.h5
+*.hdf5
+*.pickle
