@@ -11,7 +11,6 @@ dependencies = [
     "numpy (>=2.2.3,<3.0.0)",
     "matplotlib (>=3.10.0,<4.0.0)",
     "ipykernel (>=6.29.5,<7.0.0)",
-    "pandas"
 ]
 
 [tool.poetry]
@@ -21,3 +20,77 @@ packages = [{include = "frost_warsaw", from = "src"}]
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+
+[tool.ruff]
+# Exclude a variety of commonly ignored directories.
+exclude = [
+    ".bzr",
+    ".direnv",
+    ".eggs",
+    ".git",
+    ".git-rewrite",
+    ".hg",
+    ".ipynb_checkpoints",
+    ".mypy_cache",
+    ".nox",
+    ".pants.d",
+    ".pyenv",
+    ".pytest_cache",
+    ".pytype",
+    ".ruff_cache",
+    ".svn",
+    ".tox",
+    ".venv",
+    ".vscode",
+    "__pypackages__",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "node_modules",
+    "site-packages",
+    "venv",
+]
+
+line-length = 120
+indent-width = 4
+
+[tool.ruff.lint]
+select = ["ALL"]
+
+fixable = ["ALL"]
+unfixable = []
+
+ignore = ["D417",
+    "ANN101",
+    "D101", # docstring class
+    "D107", # docstring init
+    "D205", # blank lines in docstrings
+    "D102", # docstring in local function
+    "ANN204", # annotation to call function
+    "PTH123", # use open() function
+    "PD901", # suppres generic variable names
+    "RET504", # unnecessary df = something right after return statement
+    "S307", # using eval functions
+    "TRY300", # try except returning boolean values
+    "ANN205", # docstring
+    "B904", # weird errors
+    "BLE001", # blid exception
+    "D103", # annotations
+    "ANN003", # kwargs
+    "ANN001",
+    "ANN202",
+    "ANN201",
+    "ANN002",
+    "S608", # something with queries in database
+]
+pydocstyle.convention = "google"
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+docstring-code-format = true
+docstring-code-line-length = "dynamic"

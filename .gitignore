@@ -38,12 +38,14 @@ build/
 
 # Cache & temporary files
 .cache/
+*cache/
 *.tmp
 *.bak
 *.swp
 
 # VSCode settings (if you use VSCode)
 .vscode/
+.idea/
 
 # Anaconda environment files
 *.anaconda_backup
@@ -71,3 +73,7 @@ data/
 *.h5
 *.hdf5
 *.pickle
+
+# My directories
+src/secrets/
+data/
