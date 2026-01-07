@@ -19,6 +19,13 @@ env/
 *.out
 *.err
 
+# media files
+*.mp4
+*.gif
+*.png
+*.ttf
+*.xlsx
+
 # System files
 .DS_Store
 Thumbs.db
