@@ -73,7 +73,7 @@ class GetDataFromAPI:
                 logger.warning(f"Answer from an api for {url} is incorrect, waiting 5 second and trying again...")
                 time.sleep(5)
                 return self.get_raw_data(url, timeout)
-            logger.info(f"Successfully got the data for {url}.")
+            # logger.info(f"Successfully got the data for {url}.")
             return data
         except Exception:
             logger.warning(f"There is an issue with Internet connection to {url}, trying again...")
@@ -85,26 +85,28 @@ class GetDataFromAPI:
         brigade. It also creates an artificial id for that entry."""
         conn = sqlite3.connect(Path(self.data_path) / self.database_name)
         cursor = conn.cursor()
+        try:
+            data_to_database = [
+                (
+                    item.get("Lines"),
+                    item.get("Lon"),
+                    item.get("Lat"),
+                    item.get("Time"),
+                    item.get("VehicleNumber"),
+                    item.get("Brigade"),
+                )
+                for item in data.get("result", [])
+            ]
 
-        data_to_database = [
-            (
-                item.get("Lines"),
-                item.get("Lon"),
-                item.get("Lat"),
-                item.get("Time"),
-                item.get("VehicleNumber"),
-                item.get("Brigade"),
-            )
-            for item in data.get("result", [])
-        ]
-
-        cursor.executemany(f"""
-            INSERT OR IGNORE INTO {self.table_name} (line, lon, lat, time, vehicle_number, brigade)
-            VALUES (?, ?, ?, ?, ?, ?)
-        """, data_to_database)
-
-        conn.commit()
-        conn.close()
+            cursor.executemany(f"""
+                INSERT OR IGNORE INTO {self.table_name} (line, lon, lat, time, vehicle_number, brigade)
+                VALUES (?, ?, ?, ?, ?, ?)
+            """, data_to_database)
+            conn.commit()
+        except Exception as e:
+            logger.info(f"Exception {e}")
+        finally:    
+            conn.close()
 
     def collect_data(self, seconds_between_requests: int = 30) -> None:
         """Function collects all data in the infinite loop. But first you need to ensure that there is no file with
@@ -127,7 +129,7 @@ class GetDataFromAPI:
 
                 counter += 1
                 logger.info(f"Successfully got the data for {counter} batch.")
-                time.sleep(30)
+                time.sleep(seconds_between_requests)
         except KeyboardInterrupt:
             df = self.read_database()
             df["time"] = pd.to_datetime(df["time"])
@@ -136,7 +138,7 @@ class GetDataFromAPI:
             end_time = df["time"].max().strftime("%Y-%m-%d %H:%M:%S")
 
             logger.info(
-                f"Data collection interrupted by user. Successfully retrieved {len(df)} rows "
+                f"Successfully retrieved {len(df)} rows "
                 f"and collected data between {start_time} and {end_time}."
             )
 
@@ -150,5 +152,5 @@ class GetDataFromAPI:
 
 if __name__ == "__main__":
     warsaw_data = GetDataFromAPI()
-    warsaw_data.collect_data(15)
+    warsaw_data.collect_data(25)
     
